@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.28307.168
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31005.135
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FrontEndHomework", "FrontEndHomework\FrontEndHomework.csproj", "{DBABA0DD-951A-411E-A58C-4233AFDB72C5}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FrontEndHomework", "FrontEndHomework.csproj", "{DBABA0DD-951A-411E-A58C-4233AFDB72C5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -20,6 +20,6 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {4160D19F-62EB-4822-82A8-424789199253}
+		SolutionGuid = {99D752A1-F5F4-48EA-8055-54AAFD225705}
 	EndGlobalSection
 EndGlobal
