@@ -48,12 +48,15 @@ namespace Main.SystemAdmin
             var model = manager.GetAccountViewModel(id);
 
             if (model == null)
-                Response.Redirect("~/SystemAdmin/MemberList.aspx");
+                //修改點: MemberList.aspx-->MamberList.aspx
+                Response.Redirect("~/SystemAdmin/MamberList.aspx");
 
             this.txtAccount.Text = model.Account;
             this.txtName.Text = model.Name;
             this.txtEmail.Text = model.Email;
             this.txtTitle.Text = model.Title;
+            //修改點:加上Phone
+            this.txtPhone.Text = model.Phone;
             this.rdblUserLevel.SelectedValue = model.UserLevel.ToString();
         }
 
@@ -73,7 +76,8 @@ namespace Main.SystemAdmin
                 if (!Guid.TryParse(qsID, out temp))
                     return;
 
-                manager.GetAccountViewModel(temp);
+                //修改點:加上model= 傳入值 
+                model = manager.GetAccountViewModel(temp);
             }
             else
             {
@@ -83,19 +87,50 @@ namespace Main.SystemAdmin
 
             if (this.IsUpdateMode())
             {
-                if (!string.IsNullOrEmpty(this.txtPWD.Text) &&
-                !string.IsNullOrEmpty(this.txtNewPWD.Text))
+                //修改點:新增提示使用者:未驗證原密碼，不可更新成新密碼
+                if (string.IsNullOrEmpty(this.txtPWD.Text) &&
+                    !string.IsNullOrEmpty(this.txtNewPWD.Text))
                 {
+                    this.lblMsg.Text = "未驗證原密碼，不可更新新密碼";
+                    return;
+                }
+                //修改點:使用者只填入原始密碼時的驗證 
+                if (!string.IsNullOrEmpty(this.txtPWD.Text) &&
+                    string.IsNullOrEmpty(this.txtNewPWD.Text))
+                {
+
+                    if (model.PWD != this.txtPWD.Text)
+                    {
+                        this.lblMsg.Text = "密碼驗證失敗";
+                        return;
+                    }
+                    else
+                    {
+                        model.PWD = this.txtPWD.Text.Trim();
+                    }
+                }
+                if (!string.IsNullOrEmpty(this.txtPWD.Text) &&
+                    !string.IsNullOrEmpty(this.txtNewPWD.Text))
+                {
+                    //修改點:驗證新密碼不可和原密碼相同
+                    if (model.PWD == this.txtNewPWD.Text)
+                    {
+                        this.lblMsg.Text = "新密碼不可為原始密碼";
+                        return;
+                    }
                     if (model.PWD == this.txtPWD.Text)
                     {
                         model.PWD = this.txtNewPWD.Text.Trim();
                     }
                     else
                     {
-                        this.lblMsg.Text = "密碼和原密碼不一致";
+                        //修改點:單純調整提示內容 
+                        this.lblMsg.Text = "密碼驗證失敗";
                         return;
                     }
                 }
+                
+
             }
             else
             {
@@ -137,8 +172,10 @@ namespace Main.SystemAdmin
             }
 
 
+
             if (this.IsUpdateMode())
-                manager.CreateAccountViewModel(model);
+                //修改點: CreateAccountViewModel--> UpdateAccountViewModel
+                manager.UpdateAccountViewModel(model);
             else
             {
                 try

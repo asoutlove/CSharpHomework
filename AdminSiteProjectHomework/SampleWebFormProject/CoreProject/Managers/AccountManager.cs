@@ -145,7 +145,7 @@ namespace CoreProject.Managers
                         ON Accounts.ID = AccountInfos.ID
                         {filterConditions}
                     ) AS TempT
-                    WHERE RowNumber > {pageSize * (1 - 1)}
+                    WHERE RowNumber > {pageSize * (currentPage - 1)}
                     ORDER BY ID
                 ";
 
@@ -187,7 +187,7 @@ namespace CoreProject.Managers
             // 算總數並回傳
             int? totalSize2 = this.GetScale(countQuery, dbParameters) as int?;
             totalSize = (totalSize2.HasValue) ? totalSize2.Value : 0;
-            totalSize = 33;
+            //修改點: 刪除totalSize = 33;
 
             return list;
         }
@@ -286,13 +286,14 @@ namespace CoreProject.Managers
 
         public void UpdateAccountViewModel(AccountViewModel model)
         {
+            //修改點:PHONE = @Email-->@PHONE;TITLE = @Email-->@Title 
             string dbCommandText =
                 $@" UPDATE Accounts 
                         SET PWD = @PWD, UserLevel = @UserLevel, Email = @Email  
                     WHERE ID = @id;
 
                     UPDATE AccountInfos 
-                        SET NAME = @name, PHONE = @Email, TITLE = @Email 
+                        SET NAME = @name, PHONE = @PHONE, TITLE = @Title 
                     WHERE ID = @id;
                 ";
 

@@ -14,7 +14,9 @@
             <tr><td>密碼</td><td><asp:TextBox runat="server" ID="txtPWD" ></asp:TextBox></td></tr>
         </table>
 
-        <asp:Button runat="server" ID="btn1" Text="Login" />
+        <asp:Button runat="server" ID="btn1" Text="Login" OnClick="btn1_Click" />
+        <%--修改點:新增label用來顯示登入失敗字樣--%>
+        <asp:Label ID="lbmsgNot" runat="server" Text="" ForeColor="Red"></asp:Label>
     </form>
 </body>
 </html>

@@ -29,7 +29,8 @@ namespace CoreProject.Helpers
         /// <param name="pwd"></param>
         public static bool TryLogin(string account, string pwd)
         {
-            if (!LoginHelper.HasLogined())
+            //修改點:!LoginHelper-->LoginHelper
+            if (LoginHelper.HasLogined())
                 return true;
 
             // READ DB And check account / pwd

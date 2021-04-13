@@ -27,7 +27,8 @@
         <Columns>
             <asp:TemplateField HeaderText="Account">
                 <ItemTemplate>
-                    <a href="berDetail.aspx?AccountID=<%# Eval("ID") %>">
+                    <%--修改點:berDetail-->MemberDetail; AccountID-->ID--%>
+                    <a href="MemberDetail.aspx?ID=<%# Eval("ID") %>">
                     <%# Eval("Account") %>
                     </a>
                 </ItemTemplate>

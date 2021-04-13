@@ -25,15 +25,28 @@ namespace Main.SystemAdmin
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            this.LoadGridView();
-            this.RestoreParameters();
+            //修改點:加入!this.IsPostBack情況
+            if (!this.IsPostBack)
+            {
+                this.LoadGridView();
+                this.RestoreParameters();
+            }
+
         }
 
         private void RestoreParameters()
         {
             string name = Request.QueryString["name"];
+            //修改點:加入權限資料
+            string levelText = Request.QueryString["level"];
             if (!string.IsNullOrEmpty(name))
                 this.txtName.Text = name;
+            //修改點
+            if (!string.IsNullOrEmpty(levelText))
+            {
+                this.rdblLevel.SelectedValue = levelText;
+            }
+               
         }
 
         private string GetQueryString(bool includePage, int? pageIndex)
@@ -47,16 +60,16 @@ namespace Main.SystemAdmin
 
             List<string> conditions = new List<string>();
 
-            if (!string.IsNullOrEmpty(page) && includePage)
+            if(!string.IsNullOrEmpty(page) && includePage)
                 conditions.Add("Page=" + page);
 
-            if (!string.IsNullOrEmpty(name))
+            if(!string.IsNullOrEmpty(name))
                 conditions.Add("Name=" + name);
 
-            if (!string.IsNullOrEmpty(levelText))
+            if(!string.IsNullOrEmpty(levelText))
                 conditions.Add("Level=" + levelText);
 
-            if (pageIndex.HasValue)
+            if(pageIndex.HasValue)
                 conditions.Add("Page=" + pageIndex.Value);
 
             string retText =
